@@ -38,7 +38,8 @@ header{position:sticky;top:12px;z-index:20;margin:12px auto 0;max-width:1260px;p
 .moon{display:none}[data-theme=dark] .moon{display:block}
 main{max-width:1260px;margin:18px auto 40px;padding:0 16px;display:grid;gap:18px}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-#kpis,#iKpis{grid-template-columns:repeat(3,1fr)}
+#kpis{grid-template-columns:repeat(5,1fr)}
+#iKpis{grid-template-columns:repeat(3,1fr)}
 .kpi{padding:18px 20px;transition:transform .25s,box-shadow .25s}
 .kpi .lab{font-weight:700;color:var(--mut);display:flex;gap:8px;align-items:center}
 .kpi .ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff}
@@ -409,6 +410,11 @@ footer{width:100%;margin:0 auto!important;text-align:center;box-sizing:border-bo
 footer .ft1{font-size:.98rem;font-weight:700;letter-spacing:.2px}
 footer .ft2{font-size:1.15rem;font-weight:900;color:var(--ink)}
 footer .ft3{font-size:.9rem;font-weight:600;opacity:.8}
+/* 5 KPI cards on the main tab: keep big numbers inside the cards */
+#kpis .kpi .val{font-size:clamp(2rem,2.6vw,3.2rem)!important}
+@media(max-width:1000px){#kpis{grid-template-columns:repeat(2,1fr)!important}}
+/* degree ring labels: fit two decimals */
+#cLevel .lvpct b{font-size:.78rem!important;letter-spacing:-.2px}
 </style>
 </head>
 <body>
@@ -459,7 +465,7 @@ footer .ft3{font-size:.9rem;font-weight:600;opacity:.8}
   <section class="kpis" id="kpis"></section>
   <section class="grid">
     <div class="glass card fade" id="cDonut"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-chart"/></svg></span>สัดส่วน Overall ทั้งหมด</span><span class="hint" id="donutHint"></span></h3><div class="donutwrap" id="donut"></div></div>
-    <div class="glass card fade" id="cLevel"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-trend"/></svg></span>Overall 4 ตามระดับปริญญา</span></h3><div id="levelBars"></div><div class="legend" id="legLevel"></div></div>
+    <div class="glass card fade" id="cLevel"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-trend"/></svg></span>Overall 4 ขึ้นไปตามระดับปริญญา</span></h3><div id="levelBars"></div><div class="legend" id="legLevel"></div></div>
     <div class="glass card wide fade" id="cFull"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-grid"/></svg></span>สัดส่วน Overall ทั้งหมดแยกตามระดับ</span><span class="hint">แท่งเดียวคือ 100% ของแต่ละระดับ</span></h3><div id="fullBars"></div><div class="legend" id="fullLeg"></div></div>
     <div class="glass card wide fade" id="cFac"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-building"/></svg></span>ทุก Overall ในแต่ละคณะ / วิทยาลัย</span><span class="hint">คลิกชื่อเพื่อดูเฉพาะคณะนั้น</span></h3><div id="facBars"></div><div class="legend" id="facLeg"></div></div>
     <div class="glass card wide fade" id="cScat"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-pin"/></svg></span>จำนวน Overall 4 เทียบ สัดส่วน Overall 4 ของแต่ละคณะ</span><span class="hint">ยิ่งขวาบน ยิ่งดี · วางเมาส์เพื่อดูชื่อ</span></h3><div id="scatter"></div></div>
@@ -478,9 +484,9 @@ footer .ft3{font-size:.9rem;font-weight:600;opacity:.8}
 <main id="viewHist" class="hide">
   <section class="kpis" id="hKpis"></section>
   <section class="grid">
-    <div class="glass card wide fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-trend"/></svg></span>แนวโน้มร้อยละ Overall 4 เทียบเป้าหมาย 20%</span><span class="hint">2564–2568</span></h3><div id="hLine"></div></div>
+    <div class="glass card wide fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-trend"/></svg></span>แนวโน้มร้อยละ Overall 4 ขึ้นไป เทียบเป้าหมาย 25%</span><span class="hint">2564–2568</span></h3><div id="hLine"></div></div>
     <div class="glass card wide fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-grid"/></svg></span>สัดส่วน Overall ทุกปีการศึกษา</span><span class="hint">แท่งเดียวคือ 100% ของแต่ละปี</span></h3><div id="hStack"></div><div class="legend"><span><i style="background:var(--o2)"></i>Overall 2</span><span><i style="background:var(--o3)"></i>Overall 3</span><span><i style="background:var(--o4)"></i>Overall 4</span><span><i style="background:var(--o5)"></i>Overall 5</span></div></div>
-    <div class="glass card fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-cap"/></svg></span>Overall 4 ตามระดับ 2567 เทียบ 2568</span><span class="hint">ร้อยละของหลักสูตรในระดับนั้น</span></h3><div id="hLevel"></div><div class="legend"><span><i style="background:#94a3b8"></i>2567</span><span><i style="background:var(--o4)"></i>2568</span></div></div>
+    <div class="glass card fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-cap"/></svg></span>Overall 4 ขึ้นไปตามระดับ 2567 เทียบ 2568</span><span class="hint">ร้อยละของหลักสูตรในระดับนั้น (Overall 4 + 5)</span></h3><div id="hLevel"></div><div class="legend"><span><i style="background:#94a3b8"></i>2567</span><span><i style="background:var(--o4)"></i>2568</span></div></div>
     <div class="glass card fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-building"/></svg></span>ขอบเขตการประเมิน 2568</span><span class="hint">221 หลักสูตร</span></h3><div id="hScope"></div></div>
     <div class="glass card wide fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-alert"/></svg></span>ระดับคะแนนรายเกณฑ์ย่อย 1 - 8 (2568)</span><span class="hint">จำนวนหลักสูตรจาก 221 หลักสูตร · ข้อมูลจากไฟล์ Excel</span></h3><div id="hCrit"></div></div>
     <div class="glass card wide fade"><h3><span class="t"><span class="ico"><svg class="ic"><use href="#i-trend"/></svg></span>จำนวนหลักสูตรแยก Overall รายปี</span><span class="hint">แท่งสูง = จำนวนหลักสูตร · ตัวเลขเหนือแท่ง</span></h3><div id="hCols"></div></div>
@@ -535,8 +541,10 @@ function renderKPI(){
   const top=facs.sort((a,b)=>(b.s.cnt[4]/b.s.n)-(a.s.cnt[4]/a.s.n))[0];
   const cards=[
     {lab:'จำนวนหลักสูตร', ico:'list', col:'#2563eb', val:s.total, sub:`มีผลประเมิน ${fmt(s.n)} หลักสูตร`, mode:'int'},
-    {lab:'Overall 4', ico:'check', col:'#ea580c', val:p4, sub:`${fmt(s.cnt[4])} หลักสูตร`, mode:'pct'},
+    {lab:'Overall 2', ico:'star', col:'#64748b', val:s.n?s.cnt[2]/s.n*100:0, sub:`${fmt(s.cnt[2])} หลักสูตร`, mode:'pct'},
     {lab:'Overall 3', ico:'star', col:'#2563eb', val:p3, sub:`${fmt(s.cnt[3])} หลักสูตร`, mode:'pct'},
+    {lab:'Overall 4', ico:'check', col:'#ea580c', val:p4, sub:`${fmt(s.cnt[4])} หลักสูตร`, mode:'pct'},
+    {lab:'Overall 5', ico:'check', col:'#16a34a', val:s.n?s.cnt[5]/s.n*100:0, sub:`${fmt(s.cnt[5])} หลักสูตร`, mode:'pct'},
   ];
   $('#kpis').innerHTML = cards.map((c,i)=>`<div class="glass kpi fade" style="animation-delay:${i*80}ms;--c:${c.col}"><div class="lab"><span class="ico" style="background:${c.col}">${ic(c.ico)}</span>${c.lab}</div><div class="val" data-v="${c.val}" data-m="${c.mode}">${c.mode==='text'?'':''}</div><div class="sub">${c.sub}</div></div>`).join('');
   document.querySelectorAll('.kpi .val').forEach(el=>{ const v=parseFloat(el.dataset.v); const m=el.dataset.m; if(m==='dec') el.textContent=v.toFixed(2); else if(m==='text') el.style.display='none'; else countUp(el,v,m==='pct'); });
@@ -562,28 +570,28 @@ function renderLevel(){
   const COLS={'ตรี':'#2563eb','ป.บัณฑิต':'#0891b2','โท':'#7c3aed','เอก':'#db2777'};
   const C=2*Math.PI*34;
   $('#levelBars').innerHTML = `<div class="lvgrid">${LVL_ORDER.map((l,i)=>{
-    const s=stats(list.filter(p=>p.level===l)); const v=s.cnt[4]||0; const pp=s.n? v/s.n*100 : 0;
+    const s=stats(list.filter(p=>p.level===l)); const v=(s.cnt[4]||0)+(s.cnt[5]||0); const pp=s.n? v/s.n*100 : 0;
     const dim = SCOPE[state.level].includes(l) ? '' : 'opacity:.4;filter:grayscale(.6);';
     return `<div class="lvt" style="--c:${COLS[l]};${dim}animation-delay:${i*80}ms">
       <svg class="lvring" viewBox="0 0 84 84"><circle cx="42" cy="42" r="34" fill="none" stroke="var(--track)" stroke-width="7"/><circle cx="42" cy="42" r="34" fill="none" stroke="${COLS[l]}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(pp/100*C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 42 42)" style="animation:dash 1.2s ${i*120}ms both"/></svg>
-      <div class="lvpct"><b>${pp.toFixed(1)}%</b></div>
+      <div class="lvpct"><b>${pp.toFixed(2)}%</b></div>
       <div class="lvinfo"><h4>${LVL_NAME[l]}</h4><div class="lvnum"><b>${fmt(v)}</b> / ${fmt(s.n)} หลักสูตร</div><div class="lvbar"><i style="width:${pp.toFixed(2)}%"></i></div></div>
     </div>`; }).join('')}</div>`;
-  // column chart: share of Overall 4 per degree
+  // column chart: share of Overall 4 or higher per degree
   const cw=520,ch=210,cl=34,cb=44,ct=26;
   const yv=v=>ct+(1-v/100)*(ch-ct-cb);
-  const cols=LVL_ORDER.map(l=>{ const s=stats(list.filter(p=>p.level===l)); const v=s.cnt[4]||0; return {l,v,n:s.n,pp:s.n? v/s.n*100:0}; });
+  const cols=LVL_ORDER.map(l=>{ const s=stats(list.filter(p=>p.level===l)); const v=(s.cnt[4]||0)+(s.cnt[5]||0); return {l,v,n:s.n,pp:s.n? v/s.n*100:0}; });
   const bw=(cw-cl-10)/cols.length;
   let svg=`<svg viewBox="0 0 ${cw} ${ch}" width="100%" style="overflow:visible;margin-top:14px">`;
   [0,50,100].forEach(t=>{ svg+=`<line x1="${cl}" x2="${cw-6}" y1="${yv(t)}" y2="${yv(t)}" stroke="rgba(148,163,184,.3)"/><text x="${cl-6}" y="${yv(t)+4}" text-anchor="end" font-size="12.65" font-weight="700" fill="var(--sub)">${t}%</text>`; });
   cols.forEach((c,i)=>{ const x=cl+i*bw+bw*0.22, w=bw*0.56, h=(ch-ct-cb)*c.pp/100; const col=['#2563eb','#0891b2','#7c3aed','#db2777'][i];
-    svg+=`<rect x="${x}" y="${ch-cb-h}" width="${w}" height="${h}" rx="9" fill="${col}" style="transform-box:fill-box;transform-origin:bottom;animation:up .9s ${i*110}ms both" data-tip="${LVL_NAME[c.l]}: Overall 4 = ${fmt(c.v)} จาก ${fmt(c.n)} (${c.pp.toFixed(2)}%)"/>`;
-    svg+=`<text x="${x+w/2}" y="${ch-cb-h-7}" text-anchor="middle" font-size="14.95" font-weight="900" fill="var(--ink)">${c.pp.toFixed(1)}%</text>`;
+    svg+=`<rect x="${x}" y="${ch-cb-h}" width="${w}" height="${h}" rx="9" fill="${col}" style="transform-box:fill-box;transform-origin:bottom;animation:up .9s ${i*110}ms both" data-tip="${LVL_NAME[c.l]}: Overall 4 ขึ้นไป = ${fmt(c.v)} จาก ${fmt(c.n)} (${c.pp.toFixed(2)}%)"/>`;
+    svg+=`<text x="${x+w/2}" y="${ch-cb-h-7}" text-anchor="middle" font-size="14.95" font-weight="900" fill="var(--ink)">${c.pp.toFixed(2)}%</text>`;
     svg+=`<text x="${x+w/2}" y="${ch-cb+17}" text-anchor="middle" font-size="13.8" font-weight="800" fill="var(--ink)">${LVL_NAME[c.l]}</text>`;
     svg+=`<text x="${x+w/2}" y="${ch-cb+32}" text-anchor="middle" font-size="12.65" font-weight="700" fill="var(--sub)">${c.v}/${c.n}</text>`; });
   svg+='</svg>';
   $('#levelBars').insertAdjacentHTML('beforeend', `<div class="lvcols">${svg}</div>`);
-  $('#legLevel').innerHTML = `<span>วงแหวนและแท่ง = ร้อยละของหลักสูตรที่ได้ Overall 4 ในแต่ละระดับ · ใต้ชื่อ = Overall 4 / หลักสูตรทั้งหมด</span>`;
+  $('#legLevel').innerHTML = `<span>วงแหวนและแท่ง = ร้อยละของหลักสูตรที่ได้ Overall 4 ขึ้นไป (4 + 5) ในแต่ละระดับ · ใต้ชื่อ = จำนวน Overall 4 ขึ้นไป / หลักสูตรทั้งหมด</span>`;
 }
 
 function stackRow(s,label,sub,i,showParts=true){
@@ -724,19 +732,20 @@ const HIST = {
   lvl2567:{'ตรี':{n:73,4:18},'ป.บัณฑิต':{n:3,4:1},'โท':{n:78,4:18},'เอก':{n:58,4:12}},
   scope2567:[['AUN-QA (IQA)',212],['เกณฑ์ สกอ.',10],['เทียบเคียงสภาวิชาชีพ',1],['เทียบเคียงเกณฑ์สากล',10]],
   crit2567:[['เกณฑ์ 1 ผลลัพธ์การเรียนรู้',16],['เกณฑ์ 2 โครงสร้างหลักสูตร',11],['เกณฑ์ 3 การเรียนการสอน',2],['เกณฑ์ 4 การประเมินผู้เรียน',3],['เกณฑ์ 6 การสนับสนุนผู้เรียน',4],['เกณฑ์ 7 สิ่งอำนวยความสะดวก',4],['เกณฑ์ 8 ผลผลิตและผลลัพธ์',50]],
-  target:20
+  target:25
 };
 function lvlPct(n,t){ return t? n/t*100 : 0; }
 function renderHist(){
   const y=HIST.years, R=HIST.rows;
   const p4=y.map(k=>lvlPct(R[k][4],R[k].n));
+  const p45=y.map(k=>lvlPct((R[k][4]||0)+(R[k][5]||0),R[k].n));
   const c67=R[2567], c68=R[2568];
-  const LI=p4.length-1; const d4=p4[LI]-p4[LI-1];
+  const LI=p4.length-1; const d4=p45[LI]-p45[LI-1];
   const cards=[
     {lab:'หลักสูตรที่ประเมิน 2568',ico:'list',col:'#2563eb',val:c68.n,sub:`2567: ${fmt(c67.n)} หลักสูตร`},
-    {lab:'Overall 4 ปี 2568',ico:'check',col:'#ea580c',val:p4[LI],sub:`${fmt(c68[4])} หลักสูตร · 2567: ${p4[LI-1].toFixed(2)}%`,mode:'pct'},
+    {lab:'Overall 4 ขึ้นไป ปีการศึกษา 2568',ico:'check',col:'#ea580c',val:p45[LI],sub:`${fmt((c68[4]||0)+(c68[5]||0))} หลักสูตร · 2567: ${p45[LI-1].toFixed(2)}%`,mode:'pct'},
     {lab:'เพิ่มขึ้นจากปี 2567',ico:'trend',col:'#16a34a',val:null,sub:`${d4>=0?'+':''}${d4.toFixed(2)} จุดร้อยละ`,text:true},
-    {lab:'เทียบเป้าหมาย 20%',ico:'star',col:'#7c3aed',val:null,sub:`ปี 2568 ${p4[LI]>=HIST.target?'เกินเป้า':'ต่ำกว่าเป้า'} ${Math.abs(p4[LI]-HIST.target).toFixed(2)} จุด`,text:true},
+    {lab:'เทียบเป้าหมาย 25%',ico:'star',col:'#7c3aed',val:null,sub:`Overall 4 ขึ้นไป ปี 2568 ${p45[LI]>=HIST.target?'เกินเป้า':'ต่ำกว่าเป้า'} ${Math.abs(p45[LI]-HIST.target).toFixed(2)} จุด`,text:true},
   ];
   $('#hKpis').innerHTML=cards.map((c,i)=>`<div class="glass kpi fade" style="animation-delay:${i*80}ms;--c:${c.col}"><div class="lab"><span class="ico" style="background:${c.col}">${ic(c.ico)}</span>${c.lab}</div><div class="val" ${c.val!=null?`data-v="${c.val}" data-m="${c.mode==='pct'?'pct':'int'}"`:''}>${c.val==null?(c.text?'':''):''}</div><div class="sub">${c.sub}</div></div>`).join('');
   document.querySelectorAll('#hKpis .val[data-v]').forEach(el=>{ const v=parseFloat(el.dataset.v); if(el.dataset.m==='pct') countUp(el,v,true); else countUp(el,v,false); });
@@ -745,13 +754,13 @@ function renderHist(){
   const X=i=>L+i*(W-L-Rr)/(y.length-1), Yv=v=>T+(1-v/ymax)*(H-T-B);
   let g='';
   [0,10,20,30,40,50,60].forEach(t=>{ g+=`<line x1="${L}" x2="${W-Rr}" y1="${Yv(t)}" y2="${Yv(t)}" stroke="rgba(148,163,184,.3)"/><text x="${L-8}" y="${Yv(t)+5}" text-anchor="end" font-size="14.95" font-weight="700" fill="var(--sub)">${t}%</text>`; });
-  g+=`<line x1="${L}" x2="${W-Rr}" y1="${Yv(HIST.target)}" y2="${Yv(HIST.target)}" stroke="#16a34a" stroke-dasharray="7 6" stroke-width="2"/><text x="${W-Rr}" y="${Yv(HIST.target)-8}" text-anchor="end" font-size="14.95" font-weight="800" fill="#16a34a">เป้าหมาย 20%</text>`;
-  const path=p4.map((v,i)=>`${i?'L':'M'}${X(i)},${Yv(v)}`).join(' ');
+  g+=`<line x1="${L}" x2="${W-Rr}" y1="${Yv(HIST.target)}" y2="${Yv(HIST.target)}" stroke="#16a34a" stroke-dasharray="7 6" stroke-width="2"/><text x="${W-Rr}" y="${Yv(HIST.target)-8}" text-anchor="end" font-size="14.95" font-weight="800" fill="#16a34a">เป้าหมาย 25%</text>`;
+  const path=p45.map((v,i)=>`${i?'L':'M'}${X(i)},${Yv(v)}`).join(' ');
   const area=`${path} L${X(y.length-1)},${H-B} L${X(0)},${H-B} Z`;
   g+=`<defs><linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ea580c" stop-opacity=".28"/><stop offset="100%" stop-color="#ea580c" stop-opacity="0"/></linearGradient></defs>`;
   g+=`<path d="${area}" fill="url(#trendFill)" style="animation:fadeUp .8s .4s both"/>`;
   g+=`<path d="${path}" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:2000;stroke-dashoffset:2000;animation:draw 1.4s ease forwards"/>`;
-  p4.forEach((v,i)=>{ g+=`<circle style="transform-box:fill-box;transform-origin:center;animation:pop .45s ${0.5+i*0.25}s both" cx="${X(i)}" cy="${Yv(v)}" r="8" fill="#ea580c" stroke="#fff" stroke-width="3" data-tip="ปีการศึกษา ${y[i]}: Overall 4 = ${fmt(R[y[i]][4])} จาก ${fmt(R[y[i]].n)} หลักสูตร (${v.toFixed(2)}%)"/><text x="${i===0?X(i)+16:X(i)}" y="${Yv(v)-16}" text-anchor="${i===0?'start':'middle'}" font-size="16.1" font-weight="800" fill="var(--ink)">${v.toFixed(2)}%</text><text x="${X(i)}" y="${H-B+22}" text-anchor="middle" font-size="16.1" font-weight="800" fill="var(--ink)">${y[i]}</text>`; });
+  p45.forEach((v,i)=>{ g+=`<circle style="transform-box:fill-box;transform-origin:center;animation:pop .45s ${0.5+i*0.25}s both" cx="${X(i)}" cy="${Yv(v)}" r="8" fill="#ea580c" stroke="#fff" stroke-width="3" data-tip="ปีการศึกษา ${y[i]}: Overall 4 ขึ้นไป = ${fmt((R[y[i]][4]||0)+(R[y[i]][5]||0))} จาก ${fmt(R[y[i]].n)} หลักสูตร (${v.toFixed(2)}%)"/><text x="${i===0?X(i)+16:X(i)}" y="${Yv(v)-16}" text-anchor="${i===0?'start':'middle'}" font-size="16.1" font-weight="800" fill="var(--ink)">${v.toFixed(2)}%</text><text x="${X(i)}" y="${H-B+22}" text-anchor="middle" font-size="16.1" font-weight="800" fill="var(--ink)">${y[i]}</text>`; });
   $('#hLine').innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="overflow:visible">${g}</svg>`;
   // stacked by year
   $('#hStack').innerHTML = y.map((yr,i)=>{ const r=R[yr]; const segs=[2,3,4,5].map(k=>{ const n=r[k]||0; if(!n) return ''; const w=n/r.n*100; return `<div style="flex:0 0 ${w}%;background:${OVC[k]};animation-delay:${i*60}ms" data-tip="${yr} · Overall ${k}: ${fmt(n)} (${pct(n,r.n)})">${w>=9?`${n} (${pct(n,r.n)})`:(w>=2.5?`<span class="sn">${n}</span>`:'')}</div>`; }).join('');
@@ -759,8 +768,8 @@ function renderHist(){
     return `<div style="margin:12px 0"><div class="row" style="grid-template-columns:minmax(120px,1fr) 3fr;margin:0"><div class="name">ปี ${yr} <span class="muted">(${fmt(r.n)})</span>${tiny?`<div class="tinyk">${tiny}</div>`:''}</div><div class="stack">${segs}</div></div></div>`; }).join('');
   // level comparison
   const lv=['ตรี','ป.บัณฑิต','โท','เอก'];
-  const cur=lv.map(l=>{ const s=stats(DATA.filter(p=>p.level===l)); return {l, p: s.n? s.cnt[4]/s.n*100 : 0, n:s.n, c:s.cnt[4]}; });
-  const prev=lv.map(l=>{ const o=HIST.lvl2567[l]; return {l, p: lvlPct(o[4],o.n), n:o.n, c:o[4]}; });
+  const cur=lv.map(l=>{ const s=stats(DATA.filter(p=>p.level===l)); const c=(s.cnt[4]||0)+(s.cnt[5]||0); return {l, p: s.n? c/s.n*100 : 0, n:s.n, c}; });
+  const prev=lv.map(l=>{ const o=HIST.lvl2567[l]; const c=(o[4]||0)+(o[5]||0); return {l, p: lvlPct(c,o.n), n:o.n, c}; });
   $('#hLevel').innerHTML = lv.map((l,i)=>`<div style="margin:12px 0"><div class="name" style="font-weight:800;margin-bottom:4px">${LVL_NAME[l]}</div>
      <div class="row" style="margin:4px 0"><div class="name muted" style="font-size:1.09rem">2567</div><div class="track"><div class="bar" style="--w:${prev[i].p*0.5}%;--c:#94a3b8;animation-delay:${i*80}ms"><span>${prev[i].c} / ${prev[i].n} (${prev[i].p.toFixed(2)}%)</span></div></div></div>
      <div class="row" style="margin:4px 0"><div class="name muted" style="font-size:1.09rem">2568</div><div class="track"><div class="bar" style="--w:${cur[i].p*0.5}%;--c:${OVC[4]};animation-delay:${i*80+60}ms"><span>${cur[i].c} / ${cur[i].n} (${cur[i].p.toFixed(2)}%)</span></div></div></div></div>`).join('');
